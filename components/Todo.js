@@ -14,17 +14,34 @@ function Todo() {
   }
   useEffect(() => {
     if (newtodo == "") {
-      setTimeout(() => {
-        fetchData();
-      }, 400);
+      fetchData();
     }
   }, [newtodo]);
-  function handleinput(e) {
-    setnewtodo(e.target.value);
+
+  const [inputData, setInputData] = useState({});
+
+  const requestParams = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: inputData }),
+  };
+
+  async function addTodoItem() {
+    await fetch("../api/newData", requestParams)
+      .catch((e) => console.log(e));
   }
 
-  function HandleSubmit() {
+  function handleinput(e) {
+    setnewtodo(e.target.value);
+    setInputData({
+      ...inputData,
+      newtodo: e.target.value,
+    });
+  }
+
+  async function HandleSubmit() {
     console.log(newtodo);
+    await addTodoItem();
     setnewtodo("");
   }
 
