@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import styles from "../../styles/Home.module.css";
 import TodoItem from "./TodoItem";
-import newData from "../api/newData";
 
 function Todo() {
   const [newtodo, setnewtodo] = useState("");
@@ -29,7 +28,6 @@ function Todo() {
 
   async function addTodoItem() {
     await fetch("../api/newData", requestParams)
-      .then(()=>newData())
       .catch((e) => console.log(e));
   }
 
@@ -64,7 +62,7 @@ function Todo() {
       <div>
         {data &&
           data.map((todo) => (
-            <TodoItem key={todo.ref["@ref"].id} todo={todo} />
+            <TodoItem key={todo.ref["@ref"].id} todo={todo} fetchData={fetchData} />
           ))}
       </div>
     </div>
