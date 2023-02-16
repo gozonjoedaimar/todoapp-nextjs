@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import TodoItem from "./TodoItem";
+import newData from "../api/newData";
 
 function Todo() {
   const [newtodo, setnewtodo] = useState("");
@@ -28,6 +29,7 @@ function Todo() {
 
   async function addTodoItem() {
     await fetch("../api/newData", requestParams)
+      .then(()=>newData())
       .catch((e) => console.log(e));
   }
 
