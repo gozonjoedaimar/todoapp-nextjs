@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import styles from "../styles/Home.module.css";
 
-function TodoItem() {
+function TodoItem({ todo }) {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleDelete = () => {};
@@ -13,12 +13,12 @@ function TodoItem() {
   return (
     <div>
       <span className={styles.eachtodo}>
-        <p className={styles.text}>Eat Breakfast</p>
+        <p className={styles.text}>{todo.data.task}</p>
         <div>
           <input
             type="checkbox"
             className={styles.toggle}
-            defaultChecked={false}
+            defaultChecked={todo.data.done}
             onChange={handlecheck}
             onClick={() => setIsChecked(!isChecked)}
           />

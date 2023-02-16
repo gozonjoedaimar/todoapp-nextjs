@@ -5,12 +5,27 @@ import TodoItem from "./TodoItem";
 function Todo() {
   const [newtodo, setnewtodo] = useState("");
 
+  const [data, setData] = useState([]);
+
+  async function fetchData() {
+    const res = await fetch("../api/getData");
+    const newData = await res.json();
+    setData(newData);
+  }
+  useEffect(() => {
+    if (newtodo == "") {
+      setTimeout(() => {
+        fetchData();
+      }, 400);
+    }
+  }, [newtodo]);
   function handleinput(e) {
     setnewtodo(e.target.value);
   }
 
   function HandleSubmit() {
     console.log(newtodo);
+    setnewtodo("");
   }
 
   return (
@@ -28,7 +43,10 @@ function Todo() {
         </div>
       </div>
       <div>
-        <TodoItem />
+        {data &&
+          data.map((todo) => (
+            <TodoItem key={todo.ref["@ref"].id} todo={todo} />
+          ))}
       </div>
     </div>
   );
